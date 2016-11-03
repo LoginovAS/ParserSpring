@@ -12,6 +12,8 @@ public interface RecordDAO {
 
     void save(Record record);
 
+    void saveAll(List<Record> records);
+
     List findByDateRange(Date dateFrom, Date dateTo);
 
 }

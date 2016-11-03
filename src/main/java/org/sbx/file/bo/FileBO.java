@@ -8,8 +8,10 @@ import java.util.List;
  */
 public interface FileBO {
 
-    void load(String fileName);
+    void load(File file);
 
     List<String> getData();
+
+    List<File> getFiles();
 
 }

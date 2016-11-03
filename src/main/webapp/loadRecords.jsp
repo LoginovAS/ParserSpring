@@ -5,7 +5,6 @@
 <body>
     <form method="POST" action="loadRecords.do">
         Load records:
-        <input name="directory">
         <button name="submit">Load</button>
     </form>
 </body>

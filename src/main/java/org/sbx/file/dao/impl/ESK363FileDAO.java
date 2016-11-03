@@ -22,12 +22,30 @@ public class ESK363FileDAO implements FileDAO {
     private static final Logger logger = LogManager.getLogger(ESK363FileDAO.class);
 
     private File file;
+    private File directory;
     private Scanner scanner;
 
     List<String> list = new ArrayList();
 
-    public void load(String fileName) throws FileException{
-        initFile(fileName);
+    public File getDirectory(){
+        return directory;
+    }
+
+    public void setDirectory(String directory){
+        this.directory = new File(directory);
+    }
+
+    public List<File> getFiles(){
+        List<File> fileList = new ArrayList<File>();
+        if (directory.isDirectory())
+            for (File file: directory.listFiles())
+                fileList.add(file);
+
+        return fileList;
+    }
+
+    public void load(File file) throws FileException{
+        initFile(file);
         openFileForInput();
 
         while (scanner.hasNextLine()) {
@@ -37,8 +55,8 @@ public class ESK363FileDAO implements FileDAO {
         this.close();
     }
 
-    private void initFile(String fileName) throws FileException {
-        this.file = new File(fileName);
+    private void initFile(File file) throws FileException {
+        this.file = file;
         if (!isFileExists())
             throw new FileException(FileErrorMessage.FILE_DOES_NOT_EXIST);
     }

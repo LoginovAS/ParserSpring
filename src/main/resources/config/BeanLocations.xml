@@ -6,5 +6,6 @@
     <import resource="../database/DataSource.xml" />
     <import resource="../database/Hibernate.xml" />
     <import resource="../beans/ESK363DBRecord.xml" />
+    <import resource="../beans/ESK363File.xml" />
 
 </beans>

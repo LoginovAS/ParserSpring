@@ -1,5 +1,6 @@
 package org.sbx.servlet;
 
+import org.sbx.enums.Bean;
 import org.sbx.enums.EnumDateFormat;
 import org.sbx.service.Service;
 import org.sbx.spring.bo.RecordBO;
@@ -31,7 +32,7 @@ public class ESK363RangeServlet extends HttpServlet {
 
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("/config/BeanLocations.xml");
 
-        RecordBO esk363RecordBO = (ESK363RecordBO) applicationContext.getBean("esk363RecordBO");
+        RecordBO esk363RecordBO = (ESK363RecordBO) applicationContext.getBean(Bean.ESK363_RECORD_BO.toString());
 
         ArrayList<ESK363DBRecord> resultList = (ArrayList) esk363RecordBO.findByDateRange(dateFrom, dateTo);
 

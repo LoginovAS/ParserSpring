@@ -1,5 +1,7 @@
 package org.sbx.servlet;
 
+import org.sbx.enums.Bean;
+import org.sbx.enums.EnumDateFormat;
 import org.sbx.enums.RegExp;
 import org.sbx.file.bo.FileBO;
 import org.sbx.file.bo.impl.ESK363FileBO;
@@ -7,6 +9,7 @@ import org.sbx.file.builders.impl.ESK363RecordBuilder;
 import org.sbx.file.parser.Parser;
 import org.sbx.spring.bo.RecordBO;
 import org.sbx.spring.bo.RecordBOImpl.ESK363RecordBO;
+import org.sbx.spring.model.Record;
 import org.sbx.spring.model.RecordImpl.ESK363DBRecord;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -21,23 +24,25 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+
 /**
  * Created by aloginov on 01.11.16.
  */
 public class LoadESK363DataServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        File directory = new File(request.getParameter("directory"));
-
-        FileBO fileBO = new ESK363FileBO();
 
         Parser parser = new Parser();
 
         List<String> list = new ArrayList<String>();
 
+        List<Record> records = new ArrayList<Record>();
+
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("/config/BeanLocations.xml");
 
-        RecordBO esk363RecordBO = (ESK363RecordBO) applicationContext.getBean("esk363RecordBO");
+        RecordBO esk363RecordBO = (ESK363RecordBO) applicationContext.getBean(Bean.ESK363_RECORD_BO.toString());
+
+        FileBO fileBO = (ESK363FileBO) applicationContext.getBean(Bean.ESK363_FILE_BO.toString());
 
         Date date = null;
         Date tmpDate = null;
@@ -49,15 +54,13 @@ public class LoadESK363DataServlet extends HttpServlet {
 
         ESK363DBRecord esk363DBRecord = null;
 
-        if (directory.isDirectory())
-            for (File file: directory.listFiles()){
-                fileBO.load(file.getAbsolutePath());
-                list.addAll(fileBO.getData());
-            }
+        for (File file: fileBO.getFiles()){
+            fileBO.load(file);
+            list.addAll(fileBO.getData());
+        }
 
 
         ESK363RecordBuilder esk363RecordBuilder;
-        ArrayList<ESK363DBRecord> esk363DBRecords = new ArrayList<ESK363DBRecord>();
 
         if (!list.isEmpty()){
             parser.setRegExp(RegExp.EXECUTION_LISTENER.getRegExp());
@@ -66,7 +69,7 @@ public class LoadESK363DataServlet extends HttpServlet {
                 parser.parse();
 
                 esk363RecordBuilder = new ESK363RecordBuilder();
-                date = parser.getDate("MM.dd.yyyy HH:mm:ss");
+                date = parser.getDate(EnumDateFormat.INPUT.getFormat());
 
                 if (date == null) continue;
 
@@ -95,9 +98,12 @@ public class LoadESK363DataServlet extends HttpServlet {
                 esk363RecordBuilder.addItemCount(itemCount);
                 esk363DBRecord = esk363RecordBuilder.build();
 
-                esk363RecordBO.save(esk363DBRecord);
+                records.add(esk363DBRecord);
             }
+
+            esk363RecordBO.saveAll(records);
         }
+
     }
 
 }

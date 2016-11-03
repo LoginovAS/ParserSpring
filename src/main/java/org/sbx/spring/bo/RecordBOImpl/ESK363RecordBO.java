@@ -18,6 +18,10 @@ public class ESK363RecordBO implements RecordBO {
         this.esk363RecordDAO = esk363RecordDAO;
     }
 
+    public void saveAll(List<Record> records){
+        esk363RecordDAO.saveAll(records);
+    }
+
     public void save(Record record) {
         esk363RecordDAO.save(record);
     }
