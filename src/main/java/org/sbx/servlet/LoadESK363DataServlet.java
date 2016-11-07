@@ -14,6 +14,7 @@ import org.sbx.spring.model.RecordImpl.ESK363DBRecord;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -30,6 +31,10 @@ import java.util.List;
  */
 public class LoadESK363DataServlet extends HttpServlet {
 
+    private RecordBO esk363RecordBO;
+
+    private FileBO fileBO;
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 
         Parser parser = new Parser();
@@ -38,11 +43,11 @@ public class LoadESK363DataServlet extends HttpServlet {
 
         List<Record> records = new ArrayList<Record>();
 
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("/config/BeanLocations.xml");
+        //ApplicationContext applicationContext = new ClassPathXmlApplicationContext("WEB-INF/config/BeanLocations.xml");
 
-        RecordBO esk363RecordBO = (ESK363RecordBO) applicationContext.getBean(Bean.ESK363_RECORD_BO.toString());
+        //RecordBO esk363RecordBO = (ESK363RecordBO) applicationContext.getBean(Bean.ESK363_RECORD_BO.toString());
 
-        FileBO fileBO = (ESK363FileBO) applicationContext.getBean(Bean.ESK363_FILE_BO.toString());
+        // FileBO fileBO = (ESK363FileBO) applicationContext.getBean(Bean.ESK363_FILE_BO.toString());
 
         Date date = null;
         Date tmpDate = null;
@@ -104,6 +109,9 @@ public class LoadESK363DataServlet extends HttpServlet {
             esk363RecordBO.saveAll(records);
         }
 
+        RequestDispatcher view = request.getRequestDispatcher("index.jsp");
+
+        view.forward(request, response);
     }
 
 }

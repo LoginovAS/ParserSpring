@@ -15,8 +15,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -30,7 +28,7 @@ public class ESK363RangeServlet extends HttpServlet {
         Date dateFrom = Service.stringToDate(request.getParameter("startDate"), EnumDateFormat.INPUT.getFormat());
         Date dateTo = Service.stringToDate(request.getParameter("endDate"), EnumDateFormat.INPUT.getFormat());
 
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("/config/BeanLocations.xml");
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("/src/main/webapp/WEB-INF/config/BeanLocations.xml");
 
         RecordBO esk363RecordBO = (ESK363RecordBO) applicationContext.getBean(Bean.ESK363_RECORD_BO.toString());
 
