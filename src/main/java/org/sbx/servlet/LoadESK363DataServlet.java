@@ -1,18 +1,13 @@
 package org.sbx.servlet;
 
-import org.sbx.enums.Bean;
 import org.sbx.enums.EnumDateFormat;
 import org.sbx.enums.RegExp;
 import org.sbx.file.bo.FileBO;
-import org.sbx.file.bo.impl.ESK363FileBO;
 import org.sbx.file.builders.impl.ESK363RecordBuilder;
 import org.sbx.file.parser.Parser;
 import org.sbx.spring.bo.RecordBO;
-import org.sbx.spring.bo.RecordBOImpl.ESK363RecordBO;
 import org.sbx.spring.model.Record;
 import org.sbx.spring.model.RecordImpl.ESK363DBRecord;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -33,7 +28,15 @@ public class LoadESK363DataServlet extends HttpServlet {
 
     private RecordBO esk363RecordBO;
 
-    private FileBO fileBO;
+    private FileBO esk363FileBO;
+
+    public void setEsk363RecordBO(RecordBO esk363RecordBO){
+        this.esk363RecordBO = esk363RecordBO;
+    }
+
+    public void setEsk363FileBO(FileBO esk363FileBO){
+        this.esk363FileBO = esk363FileBO;
+    }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 
@@ -47,7 +50,7 @@ public class LoadESK363DataServlet extends HttpServlet {
 
         //RecordBO esk363RecordBO = (ESK363RecordBO) applicationContext.getBean(Bean.ESK363_RECORD_BO.toString());
 
-        // FileBO fileBO = (ESK363FileBO) applicationContext.getBean(Bean.ESK363_FILE_BO.toString());
+        // FileBO esk363FileBO = (ESK363FileBO) applicationContext.getBean(Bean.ESK363_FILE_BO.toString());
 
         Date date = null;
         Date tmpDate = null;
@@ -59,9 +62,9 @@ public class LoadESK363DataServlet extends HttpServlet {
 
         ESK363DBRecord esk363DBRecord = null;
 
-        for (File file: fileBO.getFiles()){
-            fileBO.load(file);
-            list.addAll(fileBO.getData());
+        for (File file: esk363FileBO.getFiles()){
+            esk363FileBO.load(file);
+            list.addAll(esk363FileBO.getData());
         }
 
 
