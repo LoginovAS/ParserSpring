@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -40,6 +41,13 @@ public class LoadESK363DataServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 
+        PrintWriter pw = response.getWriter();
+
+        if (esk363RecordBO == null)
+            pw.println("esk363RecordBO is NULL.");
+        if (esk363FileBO == null)
+            pw.println("esk363FileBO is NULL.");
+/*
         Parser parser = new Parser();
 
         List<String> list = new ArrayList<String>();
@@ -115,6 +123,7 @@ public class LoadESK363DataServlet extends HttpServlet {
         RequestDispatcher view = request.getRequestDispatcher("index.jsp");
 
         view.forward(request, response);
+        */
     }
 
 }

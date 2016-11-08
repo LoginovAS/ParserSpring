@@ -14,6 +14,10 @@ public class ESK363RecordBO implements RecordBO {
 
     private RecordDAO esk363RecordDAO;
 
+    public ESK363RecordBO(){
+
+    }
+
     public void setEsk363RecordDAO(RecordDAO esk363RecordDAO){
         this.esk363RecordDAO = esk363RecordDAO;
     }

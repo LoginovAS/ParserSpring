@@ -9,9 +9,21 @@
         <servlet-class>org.sbx.servlet.ESK363RangeServlet</servlet-class>
     </servlet>
 
+    <!--servlet>
+        <servlet-name>loadESK363DataServlet</servlet-name>
+        <servlet-class>org.sbx.servlet.LoadESK363DataServlet</servlet-class>
+    </servlet-->
+
     <servlet>
         <servlet-name>loadESK363DataServlet</servlet-name>
         <servlet-class>org.sbx.servlet.LoadESK363DataServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>
+                classpath:beans/ESK363DBRecord.xml
+                classpath:beans/ESK363File.xml
+            </param-value>
+        </init-param>
     </servlet>
 
     <servlet-mapping>
@@ -30,11 +42,10 @@
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>/config/BeanLocations.xml</param-value>
+        <param-value>classpath*:config/BeanLocations.xml</param-value>
     </context-param>
 
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
-
 </web-app>

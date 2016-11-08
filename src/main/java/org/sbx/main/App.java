@@ -16,7 +16,7 @@ import java.util.Date;
 public class App {
 
     public static void main(String[] args){
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("/config/BeanLocations.xml");
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("/src/main/webapp/WEB-INF/config/BeanLocations.xml");
 
         RecordBO esk363RecordBO = (ESK363RecordBO) applicationContext.getBean("esk363RecordBO");
 

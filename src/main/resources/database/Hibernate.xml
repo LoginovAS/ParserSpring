@@ -18,9 +18,7 @@
         </property>
 
         <property name="mappingResources">
-            <list>
                 <value>/hibernate/ESK363DBRecord.hbm.xml</value>
-            </list>
         </property>
     </bean>
 

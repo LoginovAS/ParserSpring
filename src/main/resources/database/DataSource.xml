@@ -6,8 +6,8 @@
     <bean id="propertiesLocation" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
-                <value>properties/database.properties</value>
-                <value>properties/esk363_logs_directory.properties</value>
+                <value>classpath*:properties/database.properties</value>
+                <value>classpath*:properties/esk363_logs_directory.properties</value>
             </list>
         </property>
     </bean>

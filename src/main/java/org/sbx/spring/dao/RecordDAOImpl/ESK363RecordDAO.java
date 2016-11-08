@@ -27,6 +27,10 @@ public class ESK363RecordDAO extends HibernateDaoSupport implements RecordDAO {
 
     private static final Logger logger = LogManager.getLogger(ESK363RecordDAO.class);
 
+    public ESK363RecordDAO(){
+
+    }
+
     public void save(Record record) {
         getHibernateTemplate().save(record);
     }

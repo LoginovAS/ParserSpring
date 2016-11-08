@@ -35,6 +35,10 @@ public class ESK363FileDAO implements FileDAO {
         this.directory = new File(directory);
     }
 
+    public ESK363FileDAO(){
+
+    }
+
     public List<File> getFiles(){
         List<File> fileList = new ArrayList<File>();
         if (directory.isDirectory())
