@@ -13,7 +13,7 @@ public enum EnumDateFormat {
 
     INPUT {
         public String getFormat() {
-            return "MM.dd.yyyy HH:mm:ss";
+            return "dd.MM.yyyy HH:mm:ss";
         }
     };
 

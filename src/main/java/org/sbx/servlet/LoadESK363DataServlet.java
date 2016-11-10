@@ -1,13 +1,19 @@
 package org.sbx.servlet;
 
+import org.sbx.enums.Bean;
 import org.sbx.enums.EnumDateFormat;
 import org.sbx.enums.RegExp;
 import org.sbx.file.bo.FileBO;
+import org.sbx.file.bo.impl.ESK363FileBO;
 import org.sbx.file.builders.impl.ESK363RecordBuilder;
 import org.sbx.file.parser.Parser;
 import org.sbx.spring.bo.RecordBO;
+import org.sbx.spring.bo.RecordBOImpl.ESK363RecordBO;
 import org.sbx.spring.model.Record;
 import org.sbx.spring.model.RecordImpl.ESK363DBRecord;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -27,38 +33,43 @@ import java.util.List;
  */
 public class LoadESK363DataServlet extends HttpServlet {
 
-    private RecordBO esk363RecordBO;
+    //private RecordBO esk363RecordBO;
 
-    private FileBO esk363FileBO;
+    //private FileBO esk363FileBO;
 
-    public void setEsk363RecordBO(RecordBO esk363RecordBO){
-        this.esk363RecordBO = esk363RecordBO;
-    }
+    //public void setEsk363RecordBO(RecordBO esk363RecordBO){
+    //    this.esk363RecordBO = esk363RecordBO;
+    //}
 
-    public void setEsk363FileBO(FileBO esk363FileBO){
-        this.esk363FileBO = esk363FileBO;
-    }
+    //public void setEsk363FileBO(FileBO esk363FileBO){
+    //    this.esk363FileBO = esk363FileBO;
+    //}
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 
-        PrintWriter pw = response.getWriter();
 
+        WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+
+        RecordBO esk363RecordBO = (ESK363RecordBO) context.getBean(Bean.ESK363_RECORD_BO.toString());
+
+        FileBO esk363FileBO = (ESK363FileBO ) context.getBean(Bean.ESK363_FILE_BO.toString());
+
+        // Debug
+        PrintWriter pw = response.getWriter();
         if (esk363RecordBO == null)
             pw.println("esk363RecordBO is NULL.");
         if (esk363FileBO == null)
             pw.println("esk363FileBO is NULL.");
-/*
+
+
+
+
+
         Parser parser = new Parser();
 
         List<String> list = new ArrayList<String>();
 
         List<Record> records = new ArrayList<Record>();
-
-        //ApplicationContext applicationContext = new ClassPathXmlApplicationContext("WEB-INF/config/BeanLocations.xml");
-
-        //RecordBO esk363RecordBO = (ESK363RecordBO) applicationContext.getBean(Bean.ESK363_RECORD_BO.toString());
-
-        // FileBO esk363FileBO = (ESK363FileBO) applicationContext.getBean(Bean.ESK363_FILE_BO.toString());
 
         Date date = null;
         Date tmpDate = null;
@@ -123,7 +134,7 @@ public class LoadESK363DataServlet extends HttpServlet {
         RequestDispatcher view = request.getRequestDispatcher("index.jsp");
 
         view.forward(request, response);
-        */
+
     }
 
 }
