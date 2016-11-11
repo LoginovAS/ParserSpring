@@ -40,6 +40,9 @@ public class ESK363FileDAO implements FileDAO {
     }
 
     public List<File> getFiles(){
+        /**
+         * Method looks for and return the list of files in target directory.
+         */
         List<File> fileList = new ArrayList<File>();
         if (directory.isDirectory())
             for (File file: directory.listFiles())
@@ -49,6 +52,9 @@ public class ESK363FileDAO implements FileDAO {
     }
 
     public void load(File file) throws FileException{
+        /**
+         * Method opens the file using private methods and load all text data to the list.
+         */
         initFile(file);
         openFileForInput();
 
@@ -60,7 +66,13 @@ public class ESK363FileDAO implements FileDAO {
     }
 
     private void initFile(File file) throws FileException {
+        /*
+            The private setter for private file field. Is used by load(File file) method to initialize file variable.
+         */
         this.file = file;
+        /*
+            Method returns FileException in case of file does not exist.
+         */
         if (!isFileExists())
             throw new FileException(FileErrorMessage.FILE_DOES_NOT_EXIST);
     }

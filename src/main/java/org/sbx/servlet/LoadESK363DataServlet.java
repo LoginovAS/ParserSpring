@@ -1,7 +1,10 @@
 package org.sbx.servlet;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.sbx.enums.Bean;
 import org.sbx.enums.EnumDateFormat;
+import org.sbx.enums.Page;
 import org.sbx.enums.RegExp;
 import org.sbx.file.bo.FileBO;
 import org.sbx.file.bo.impl.ESK363FileBO;
@@ -31,19 +34,9 @@ import java.util.List;
 /**
  * Created by aloginov on 01.11.16.
  */
-public class LoadESK363DataServlet extends HttpServlet {
+public class LoadESK363DataServlet extends Dispatcher {
 
-    //private RecordBO esk363RecordBO;
-
-    //private FileBO esk363FileBO;
-
-    //public void setEsk363RecordBO(RecordBO esk363RecordBO){
-    //    this.esk363RecordBO = esk363RecordBO;
-    //}
-
-    //public void setEsk363FileBO(FileBO esk363FileBO){
-    //    this.esk363FileBO = esk363FileBO;
-    //}
+    private static final Logger logger = LogManager.getLogger(LoadESK363DataServlet.class);
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 
@@ -54,16 +47,10 @@ public class LoadESK363DataServlet extends HttpServlet {
 
         FileBO esk363FileBO = (ESK363FileBO ) context.getBean(Bean.ESK363_FILE_BO.toString());
 
-        // Debug
-        PrintWriter pw = response.getWriter();
         if (esk363RecordBO == null)
-            pw.println("esk363RecordBO is NULL.");
+            logger.error("esk363RecordBO is NULL");
         if (esk363FileBO == null)
-            pw.println("esk363FileBO is NULL.");
-
-
-
-
+            logger.error("esk363FileBO is NULL");
 
         Parser parser = new Parser();
 
@@ -98,6 +85,10 @@ public class LoadESK363DataServlet extends HttpServlet {
                 esk363RecordBuilder = new ESK363RecordBuilder();
                 date = parser.getDate(EnumDateFormat.INPUT.getFormat());
 
+
+                /*
+                    This line prevents the parsing of strings which do not contain date.
+                 */
                 if (date == null) continue;
 
                 if (tmpDate != null)
@@ -131,9 +122,7 @@ public class LoadESK363DataServlet extends HttpServlet {
             esk363RecordBO.saveAll(records);
         }
 
-        RequestDispatcher view = request.getRequestDispatcher("index.jsp");
-
-        view.forward(request, response);
+        this.forward(Page.INDEX.toString(), request, response);
 
     }
 
