@@ -1,0 +1,13 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+    <bean id="esk363FileBO" class="org.sbx.file.bo.impl.ESK363FileBO">
+        <property name="esk363FileDAO" ref="esk363FileDAO" />
+    </bean>
+
+    <bean id="esk363FileDAO" class="org.sbx.file.dao.impl.ESK363FileDAO">
+        <property name="directory" value="${logs.path}" />
+    </bean>
+</beans>

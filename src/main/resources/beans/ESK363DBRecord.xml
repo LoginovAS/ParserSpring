@@ -1,0 +1,14 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+    <bean id="esk363RecordBO" class="org.sbx.spring.bo.RecordBOImpl.ESK363RecordBO">
+        <property name="esk363RecordDAO" ref="esk363RecordDAO" />
+    </bean>
+
+    <bean id="esk363RecordDAO" class="org.sbx.spring.dao.RecordDAOImpl.ESK363RecordDAO" >
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+</beans>

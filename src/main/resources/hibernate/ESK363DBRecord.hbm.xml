@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="org.sbx.spring.model.RecordImpl.ESK363DBRecord" table="tbl_esk363">
+        <id name="recordId" column="id" type="java.lang.Integer">
+            <generator class="increment" />
+        </id>
+        <property name="recordDate" column="rec_date" type="java.util.Date" />
+        <property name="logLevel" column="rec_log_level" type="java.lang.String" />
+        <property name="itemCount" column="rec_item_count" type="java.lang.Integer" />
+    </class>
+
+</hibernate-mapping>

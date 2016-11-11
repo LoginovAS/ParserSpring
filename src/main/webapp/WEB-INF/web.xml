@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+         Version="2.4">
+
+    <servlet>
+        <servlet-name>dispatcher</servlet-name>
+        <servlet-class>org.sbx.servlet.Dispatcher</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>esk363RangeServlet</servlet-name>
+        <servlet-class>org.sbx.servlet.ESK363RangeServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>loadESK363DataServlet</servlet-name>
+        <servlet-class>org.sbx.servlet.LoadESK363DataServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>/Dispatcher</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>esk363RangeServlet</servlet-name>
+        <url-pattern>/getRecords</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>loadESK363DataServlet</servlet-name>
+        <url-pattern>/loadRecords</url-pattern>
+    </servlet-mapping>
+
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath*:config/BeanLocations.xml</param-value>
+    </context-param>
+
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+</web-app>
