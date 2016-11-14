@@ -1,0 +1,2 @@
+DROP TABLE IF EXISTS tbl_esk363;
+DROP TABLE IF EXISTS tbl_log_names;

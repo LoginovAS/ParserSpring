@@ -39,10 +39,10 @@ public class ESK363RangeServlet extends Dispatcher {
 
         ArrayList<ESK363DBRecord> resultList = (ArrayList) esk363RecordBO.findByDateRange(dateFrom, dateTo);
 
-        if (resultList != null && !resultList.isEmpty())
-            logger.info(ApplicationInfoMessage.DATA_RECEIVED);
+        if ((resultList == null) || (resultList.isEmpty()))
+            logger.error(ApplicationErrorMessage.DATA_RECEIVE_ERROR.getMessage());
         else
-            logger.error(ApplicationErrorMessage.DATA_RECEIVE_ERROR);
+            logger.info(ApplicationInfoMessage.DATA_RECEIVED.getMessage());
 
         request.setAttribute("records", Service.getJsonByRecordList(resultList));
 

@@ -44,26 +44,26 @@ public class ESK363RecordDAO extends HibernateDaoSupport implements RecordDAO {
             hibernateTemplate = getHibernateTemplate();
             session = hibernateTemplate.getSessionFactory().openSession();
             if (session.isOpen())
-                logger.info(DBInfoMessage.SESSION_OPENED);
+                logger.info(DBInfoMessage.SESSION_OPENED.getMessage());
             session.beginTransaction();
             for (Record record: records)
                 session.save(record);
             session.getTransaction().commit();
 
-            logger.info(DBInfoMessage.DATA_SAVED);
+            logger.info(DBInfoMessage.DATA_SAVED.getMessage());
 
         } catch (Exception ex){
-            logger.error(DBErrorMessage.CANNOT_SAVE_DATA);
+            logger.error(DBErrorMessage.CANNOT_SAVE_DATA.getMessage());
             if (session == null)
-                logger.error(DBErrorMessage.CANNOT_CREATE_SESSION);
+                logger.error(DBErrorMessage.CANNOT_CREATE_SESSION.getMessage());
             logger.error(ex);
         } finally {
             if (session != null && session.isOpen()){
                 session.close();
                 if (session.isOpen())
-                    logger.error(DBErrorMessage.CANNOT_CLOSE_SESSION);
+                    logger.error(DBErrorMessage.CANNOT_CLOSE_SESSION.getMessage());
                 else
-                    logger.info(DBInfoMessage.SESSION_CLOSED);
+                    logger.info(DBInfoMessage.SESSION_CLOSED.getMessage());
             }
         }
 
@@ -72,12 +72,13 @@ public class ESK363RecordDAO extends HibernateDaoSupport implements RecordDAO {
     public List findByDateRange(Date dateFrom, Date dateTo) {
 
         DetachedCriteria criteria = DetachedCriteria.forClass(ESK363DBRecord.class).add(Restrictions.between("recordDate", dateFrom, dateTo));
+
         List list = getHibernateTemplate().findByCriteria(criteria);
 
-        if (list != null && !list.isEmpty())
-            logger.info(ApplicationInfoMessage.DATA_RECEIVED);
+        if ((list == null) || (list.isEmpty()))
+            logger.error(ApplicationErrorMessage.DATA_RECEIVE_ERROR.getMessage());
         else
-            logger.error(ApplicationErrorMessage.DATA_RECEIVE_ERROR);
+            logger.info(ApplicationInfoMessage.DATA_RECEIVED.getMessage());
 
         return list;
     }

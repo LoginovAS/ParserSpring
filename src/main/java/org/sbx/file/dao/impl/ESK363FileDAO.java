@@ -75,6 +75,8 @@ public class ESK363FileDAO implements FileDAO {
          */
         if (!isFileExists())
             throw new FileException(FileErrorMessage.FILE_DOES_NOT_EXIST);
+        else
+            logger.info(FileInfoMessage.FILE_EXISTS.getMessage(), file.getAbsolutePath());
     }
 
     private void openFileForInput(){

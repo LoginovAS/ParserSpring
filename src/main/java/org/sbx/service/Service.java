@@ -22,6 +22,7 @@ public class Service {
 
     public static Date stringToDate(String stringDate, String stringFormat){
         DateFormat dateFormat = new SimpleDateFormat(stringFormat);
+        logger.info("dateFormat set in stringToDate - " + stringFormat);
         Date resultDate = null;
         try {
             resultDate = dateFormat.parse(stringDate);
@@ -29,12 +30,16 @@ public class Service {
             logger.error(ex);
         }
 
+        logger.info("resultDate set in dateToString - " + resultDate);
         return resultDate;
     }
 
     public static String dateToString(Date date){
         DateFormat dateFormat = new SimpleDateFormat(EnumDateFormat.DATABASE.getFormat());
-        return dateFormat.format(date);
+        logger.info("dateFormat set in dateToString - " + EnumDateFormat.DATABASE.getFormat());
+        String resultString = dateFormat.format(date);
+        logger.info("resultString set in dateToString - " + resultString);
+        return resultString;
     }
 
     public static JSONObject getJsonByRecordList(List<ESK363DBRecord> recordList){
@@ -75,6 +80,8 @@ public class Service {
 
         topLevel.put("rows", rows);
         topLevel.put("cols", cols);
+
+        logger.trace(topLevel);
 
         return topLevel;
     }

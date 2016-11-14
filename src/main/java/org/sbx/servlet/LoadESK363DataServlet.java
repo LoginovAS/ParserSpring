@@ -68,11 +68,15 @@ public class LoadESK363DataServlet extends Dispatcher {
 
         ESK363DBRecord esk363DBRecord = null;
 
+        logger.debug("esk363DBRecord initialized as - " + esk363DBRecord);
+
         for (File file: esk363FileBO.getFiles()){
             esk363FileBO.load(file);
             list.addAll(esk363FileBO.getData());
         }
 
+        for (String s: list)
+            logger.debug("Lines 73-76 - list: " + s);
 
         ESK363RecordBuilder esk363RecordBuilder;
 
@@ -83,39 +87,50 @@ public class LoadESK363DataServlet extends Dispatcher {
                 parser.parse();
 
                 esk363RecordBuilder = new ESK363RecordBuilder();
-                date = parser.getDate(EnumDateFormat.INPUT.getFormat());
 
+                // Debug
+                logger.debug("Line 94 - EnumDateFormat.ESK363LOG.getFormat(): " + EnumDateFormat.ESK363LOG.getFormat());
+
+                date = parser.getDate(EnumDateFormat.ESK363LOG.getFormat());
+
+                // Debug
+                logger.debug("Line 94 - date: " + date);
 
                 /*
                     This line prevents the parsing of strings which do not contain date.
                  */
                 if (date == null) continue;
 
-                if (tmpDate != null)
+                if (tmpDate != null) {
+                    logger.debug("Line 104 - tmpDate: " + tmpDate);
                     if (date.equals(tmpDate)) {
                         tmpIC += parser.getItemCount();
                         continue;
                     } else {
                         mainDate = tmpDate;
+                        logger.debug("Line 110 - mainDate" + mainDate);
                         logLevel = tmpLL;
                         itemCount = tmpIC;
 
                         tmpDate = date;
+                        logger.debug("Line 115 - tmpDate: " + tmpDate);
                         tmpLL = parser.getLogLevel();
                         tmpIC = parser.getItemCount();
                     }
+                }
                 else {
                     tmpDate = date;
+                    logger.debug("Line 122 tmpDate: " + tmpDate);
                     tmpLL = parser.getLogLevel();
                     tmpIC = parser.getItemCount();
                     continue;
                 }
-
+                logger.debug("Line 129 - mainDate" + mainDate);
                 esk363RecordBuilder.addDate(mainDate);
                 esk363RecordBuilder.setLogLevel(logLevel);
                 esk363RecordBuilder.addItemCount(itemCount);
                 esk363DBRecord = esk363RecordBuilder.build();
-
+                logger.debug("Line 132 - esk363DBRecord.getRecordDate(): " + esk363DBRecord.getRecordDate());
                 records.add(esk363DBRecord);
             }
 

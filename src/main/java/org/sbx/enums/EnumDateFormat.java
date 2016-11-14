@@ -17,6 +17,12 @@ public enum EnumDateFormat {
         public String getFormat() {
             return "dd.MM.yyyy HH:mm:ss";
         }
+    },
+
+    ESK363LOG{
+        public String getFormat() {
+            return "MM.dd.yyyy HH:mm:ss";
+        }
     };
 
     public abstract String getFormat();
