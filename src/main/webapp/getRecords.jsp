@@ -33,8 +33,10 @@
 
     		if (selectedOptValue != "custom"){
     			var d = new Date();
+    			var cdt_offset = 9;
+    			d.setHours(d.getHours() - cdt_offset);
     			endDateInput.value = d.toLocaleString().replace(",","");
-    			d.setMinutes(d.getMinutes() - selectedOptValue)
+    			d.setMinutes(d.getMinutes() - selectedOptValue);
     			startDateInput.value = d.toLocaleString().replace(",","");
     		}
     	}
@@ -60,7 +62,7 @@
 </head>
 <body>
     <form method="POST" action="getRecords">
-        Select time:
+        Select time (CDT TimeZone):
     	<select id="dates" name="dates" onchange="changeFormState();">
     		<option value="1">1 minute</option>
     		<option value="5" selected>5 minutes</option>

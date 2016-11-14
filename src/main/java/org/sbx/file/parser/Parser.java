@@ -50,9 +50,11 @@ public class Parser {
          */
         Date date = null;
         DateFormat dateFormat = new SimpleDateFormat(format);
+        logger.debug("Line 52 - dateFormat: " + dateFormat);
         String stringDate = "";
         if (list.size() != 0){
             stringDate = list.get(0);
+            logger.debug("Line 56 - stringDate" + stringDate);
             try {
                 date = dateFormat.parse(stringDate);
             } catch (ParseException ex){
